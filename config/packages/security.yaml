@@ -1,15 +1,22 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
+        our_db_provider:
+            entity:
+                class: App\Entity\User
+                property: apiKey
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: true
-
-            # activate different ways to authenticate
+            anonymous: ~
+            logout: ~
+            stateless: true
+            provider: our_db_provider
+            guard:
+                authenticators:
+                    - App\Security\ApiTokenAuthenticator
 
             # http_basic: true
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
@@ -20,5 +27,5 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+     - { path: ^/api/admin, roles: ROLE_ADMIN }
+     - { path: ^/api/profile, roles: ROLE_USER }

@@ -1,0 +1,21 @@
+app\Entity\Subscription:
+  subscription_{1..5}:
+    name : <word()>
+    slogan : <text(150)>
+    url : <url()>
+app\Entity\User:
+  user_{1..50}:
+    firstname: <firstName()>
+    lastname: <lastName()>
+    email:  <email()>
+    address: <address()>
+    country: <country()>
+    subscription: "@subscription*"
+app\Entity\Card:
+  card_{1..50}:
+    name: <word()>
+    creditCardType: <creditCardType()>
+    creditCardNumber: <creditCardNumber()>
+    currencyCode: <currencyCode()>
+    value: <numberBetween(0, 100000)>
+    users: "@user*"
